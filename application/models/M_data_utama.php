@@ -161,7 +161,7 @@ class M_data_utama extends CI_Model {
 				if($getrombonganbelajar_kelas){
 					$rombel_awal = $getrombonganbelajar_kelas[0]->rombongan_belajar_id;
 					$this->db->order_by('nama', 'asc');
-					$this->db->where(['semester_id'=>$this->session->userdata('semester_id')]);
+					$this->db->where(['rombongan_belajar_id'=>$rombel_awal, 'semester_id'=>$this->session->userdata('semester_id')]);
 					return $this->db->get_where('getpesertadidik')->result();
 				}else{
 					$this->db->order_by('nama', 'asc');
@@ -195,11 +195,11 @@ class M_data_utama extends CI_Model {
 			$rombel_awal = null;
 		}
 		if($this->input->get('rombel')){
-			// return $this->db->get_where('anggota_rombel', ['rombongan_belajar_id'=>$this->input->get('rombel'), 'semester_id'=>$semester_id])->result();
-			return $this->db->get_where('anggota_rombel', ['rombongan_belajar_id'=>$this->input->get('rombel')])->result();
+			return $this->db->get_where('anggota_rombel', ['rombongan_belajar_id'=>$this->input->get('rombel'), 'semester_id'=>$semester_id])->result();
+			// return $this->db->get_where('anggota_rombel', ['rombongan_belajar_id'=>$this->input->get('rombel')])->result();
 		}else{
-			// return $this->db->get_where('anggota_rombel', ['rombongan_belajar_id'=>$rombel_awal,'semester_id'=>$semester_id])->result();
-			return $this->db->get_where('anggota_rombel', ['semester_id'=>$semester_id])->result();
+			return $this->db->get_where('anggota_rombel', ['rombongan_belajar_id'=>$rombel_awal,'semester_id'=>$semester_id])->result();
+			// return $this->db->get_where('anggota_rombel', ['semester_id'=>$semester_id])->result();
 		}
 	}
 
@@ -218,7 +218,7 @@ class M_data_utama extends CI_Model {
 	function jenis_rombel()
 	{
 		$semester_id = $this->session->userdata('semester_id');
-		return $this->db->query("SELECT DISTINCT(jenis_rombel) as jenis_rombel, jenis_rombel_str from getrombonganbelajar where semester_id='$semester_id' order by jenis_rombel")->result();
+		return $this->db->query("SELECT DISTINCT(jenis_rombel) as jenis_rombel, jenis_rombel_str from getrombonganbelajar where semester_id='$semester_id' order by jenis_rombel asc")->result();
 	}
 
 	function getrombonganbelajar()
@@ -226,6 +226,7 @@ class M_data_utama extends CI_Model {
 		$pencarian = $this->input->get('pencarian');
 		$semester_id = $this->session->userdata('semester_id');
 		$jenis_rombel = $this->input->get('jenis_rombel');
+		$jenis_rombel_awal = $this->jenis_rombel()[0]->jenis_rombel;
 		if($this->session->userdata('jenis_ptk_id')==11){
 			if($pencarian){
 				$this->db->like('nama', $pencarian, 'BOTH');
@@ -242,7 +243,7 @@ class M_data_utama extends CI_Model {
 				if($jenis_rombel){
 					$this->db->where(['jenis_rombel'=>$jenis_rombel, 'semester_id'=>$semester_id]);
 				}else{
-					$this->db->where(['semester_id'=>$this->session->userdata('semester_id')]);
+					$this->db->where(['jenis_rombel'=>$jenis_rombel_awal,'semester_id'=>$this->session->userdata('semester_id')]);
 				}
 				$this->db->order_by('nama', 'asc');
 				return $this->db->get('getrombonganbelajar')->result();
@@ -328,10 +329,23 @@ class M_data_utama extends CI_Model {
 					$this->db->where(['semester_id'=>$semester_id]);
 					$this->db->order_by('rombongan_belajar_id', 'asc');
 					return $this->db->get_where('pembelajaran', ['semester_id'=>$this->session->userdata('semester_id')])->result();
+				}else
+				if($this->input->get('jenis_rombel')){
+					$rombel = $this->getrombonganbelajar();
+					foreach ($rombel as $key => $value) {
+						$cekpembelajaran = $this->db->get_where('pembelajaran', ['rombongan_belajar_id'=>$value->rombongan_belajar_id, 'semester_id'=>$semester_id])->row_array();
+						if($cekpembelajaran){
+							$pembelajaran[] = $cekpembelajaran;
+						}else{
+							$pembelajaran = [];
+						}
+					}
+
+					return json_decode(json_encode($pembelajaran));
 				}else{
 					$rombel = $this->getrombonganbelajar();
 					$rombel_awal = $rombel[0]->rombongan_belajar_id;
-					return $this->db->get_where('pembelajaran', ['semester_id'=>$semester_id])->result();
+					return $this->db->get_where('pembelajaran', ['rombongan_belajar_id'=>$rombel_awal, 'semester_id'=>$semester_id])->result();
 				}
 			}
 		}else{

@@ -164,6 +164,7 @@ class Data_ref_dapodik extends CI_Controller {
 			}
 		}
 		$data = [
+			'jenis_rombel' => $this->m_data_utama->jenis_rombel(),
 			'rombel' => $this->m_data_utama->getrombonganbelajar(),
 			'pembelajaran' => $this->m_data_utama->pembelajaran(),
 		];
