@@ -49,35 +49,6 @@ class Api extends RestController {
 		}
 	}
 
-	function getsekolah_get()
-	{
-		if($this->input->get('semester_id')){
-			$cekData = $this->db->get_where('getsekolah', ['semester_id'=>$this->input->get('semester_id')])->result();
-			$response = [
-				'status' => true,
-				'message' => "Success",
-				'data' => $cekData,
-			];
-
-			$this->response($response, 200);
-		}
-	}
-
-	function getgtk_get()
-	{
-		if($this->input->get('tahun_ajaran_id')){
-			$slice = array_slice($_GET, 1);
-			$cekData = $this->db->get_where('getgtk', $slice)->result();
-			$response = [
-				'status' => true,
-				'message' => "Success",
-				'data' => $cekData,
-			];
-
-			$this->response($response, 200);
-		}
-	}
-
 	function getgtk_post()
 	{
 		$slice = array_slice($_POST, 1);
@@ -246,37 +217,6 @@ class Api extends RestController {
 		}
 	}
 
-	function getrombonganbelajar_get()
-	{
-		if($this->input->get('semester_id')){
-			$slice = array_slice($_GET, 1);
-			if(count($slice)==1){
-				$this->db->order_by('nama', 'asc');
-				$cekData = $this->db->get_where('getrombonganbelajar', $slice)->result();
-			}else{
-				$pembelajaran = $this->db->get_where('pembelajaran_rombel', $slice)->result();
-				if($pembelajaran){
-					foreach ($pembelajaran as $key => $value) {
-						$rombel = $this->db->get_where('getrombonganbelajar', ['rombongan_belajar_id'=>$value->rombongan_belajar_id, 'semester_id'=>$value->semester_id])->row_array();
-
-						if($rombel){
-							$cekData[] = $rombel;
-						}
-					}
-				}else{
-					$cekData = [];
-				}
-			}
-			$response = [
-				'status' => true,
-				'message' => "Success",
-				'data' => $cekData,
-			];
-
-			$this->response($response, 200);
-		}
-	}
-
 	function getrombonganbelajar_post()
 	{
 		$slice = array_slice($_POST, 1);
@@ -403,21 +343,6 @@ class Api extends RestController {
 		}
 	}
 
-	function pembelajaran_rombel_get()
-	{
-		if($this->input->get('semester_id')){
-			$slice = array_slice($_GET, 1);
-			$cekData = $this->db->get_where('pembelajaran_rombel', $slice)->result();
-			$response = [
-				'status' => true,
-				'message' => "Success",
-				'data' => $cekData,
-			];
-
-			$this->response($response, 200);
-		}
-	}
-
 	function getpengguna_post()
 	{
 		$slice = array_slice($_POST, 1);
@@ -460,6 +385,87 @@ class Api extends RestController {
 		}
 	}
 
+	function getsekolah_get()
+	{
+		$this->db->order_by('semester_id', 'desc');
+		$cekData = $this->db->get('getsekolah')->result();
+		if($cekData){
+			$response = [
+				'status' => true,
+				'message' => "Success",
+				'data' => $cekData,
+			];
+			$this->response($response, 200);
+		}else{
+			$response = [
+				'status' => true,
+				'message' => "0 Results",
+			];
+			$this->response($response, 200);
+		}
+	}
+
+	function getgtk_get()
+	{
+		if($this->input->get('tahun_ajaran_id')){
+			$slice = array_slice($_GET, 1);
+			$cekData = $this->db->get_where('getgtk', $slice)->result();
+			$response = [
+				'status' => true,
+				'message' => "Success",
+				'data' => $cekData,
+			];
+
+			$this->response($response, 200);
+		}
+	}
+
+	function getrombonganbelajar_get()
+	{
+		if($this->input->get('semester_id')){
+			$slice = array_slice($_GET, 1);
+			if(count($slice)==1){
+				$this->db->order_by('nama', 'asc');
+				$cekData = $this->db->get_where('getrombonganbelajar', $slice)->result();
+			}else{
+				$pembelajaran = $this->db->get_where('pembelajaran_rombel', $slice)->result();
+				if($pembelajaran){
+					foreach ($pembelajaran as $key => $value) {
+						$rombel = $this->db->get_where('getrombonganbelajar', ['rombongan_belajar_id'=>$value->rombongan_belajar_id, 'semester_id'=>$value->semester_id])->row_array();
+
+						if($rombel){
+							$cekData[] = $rombel;
+						}
+					}
+				}else{
+					$cekData = [];
+				}
+			}
+			$response = [
+				'status' => true,
+				'message' => "Success",
+				'data' => $cekData,
+			];
+
+			$this->response($response, 200);
+		}
+	}
+
+	function pembelajaran_rombel_get()
+	{
+		if($this->input->get('semester_id')){
+			$slice = array_slice($_GET, 1);
+			$cekData = $this->db->get_where('pembelajaran_rombel', $slice)->result();
+			$response = [
+				'status' => true,
+				'message' => "Success",
+				'data' => $cekData,
+			];
+
+			$this->response($response, 200);
+		}
+	}
+
 	function getpengguna_gtk_get()
 	{
 		if($this->input->get('status')){
@@ -476,144 +482,6 @@ class Api extends RestController {
 		}
 	}
 
-	function data_tes_get()
-	{
-		if($this->input->get('semester_id')){
-			$cekData = $this->db->get_where('data_tes', ['semester_id'=>$this->input->get('semester_id')])->result();
-			$response = [
-				'status' => true,
-				'message' => "Success",
-				'data' => $cekData,
-			];
-
-			$this->response($response, 200);
-		}
-	}
-
-	function paket_soal_get()
-	{
-		if($this->input->get('semester_id')){
-			$semester_id = $this->input->get('semester_id');
-			$tahun_ajaran_id = substr($semester_id, 0,4);
-			$object = [];
-			$slice = array_slice($_GET, 1);
-			$paket_soal = $this->db->get_where('paket_soal', $slice)->result();
-			if($paket_soal){
-				foreach ($paket_soal as $key => $value) {
-					$pembelajaran = $this->db->query("SELECT * from pembelajaran_rombel where mata_pelajaran_id='$value->mata_pelajaran_id' and ptk_terdaftar_id='$value->ptk_terdaftar_id' and semester_id='$semester_id'")->row_array();
-					if($pembelajaran){
-						$object[] = [
-							'id' => $value->id,
-							'uniq' => $value->uniq,
-							'uniq_tes' => $value->uniq_tes,
-							'tingkat_pendidikan_id' => $value->tingkat_pendidikan_id,
-							'ptk_terdaftar_id' => $value->ptk_terdaftar_id,
-							'mata_pelajaran_id' => $value->mata_pelajaran_id,
-							'semester_id' => $value->semester_id,
-							'status' => $value->status,
-							'mata_pelajaran_id_str' => $pembelajaran['mata_pelajaran_id_str'],
-							'nama_mata_pelajaran' => $pembelajaran['nama_mata_pelajaran'],
-							'ptk_terdaftar_id_str' => $pembelajaran['ptk_terdaftar_id_str'],
-						];
-					}
-				}
-				$response = [
-					'status' => true,
-					'message' => "Success",
-					'data' => $object,
-				];
-				$this->response($response);
-			}else{
-				$response = [
-					'status' => true,
-					'message' => "Success",
-					'data' => '0 Results',
-				];
-				$this->response($response);
-			}
-		}else{
-			$response = [
-				'status' => false,
-				'message' => "error",
-			];
-			$this->response($response);
-		}
-	}
-
-	function paket_soal_data_get()
-	{
-		if($this->input->get('data_get')&&$this->input->get('semester_id')){
-			$decrypt = json_decode(base64_decode($this->input->get('data_get')), true);
-			$tahun_ajaran_id = substr($decrypt['semester_id'], 0, 4);
-			$list_soal = $this->db->get_where('list_soal', ['uniq_paket'=>$decrypt['uniq'], 'semester_id'=>$decrypt['semester_id']])->result();
-			$objektif_soal = $this->db->get_where('objektif_soal', ['uniq_paket'=>$decrypt['uniq']])->result();
-			$kunci_objektif = $this->db->get_where('kunci_objektif', ['uniq_paket'=>$decrypt['uniq']])->result();
-			$jadwal_tes = $this->db->get_where('jadwal_tes', ['uniq_tes'=>$decrypt['uniq_tes'], 'mata_pelajaran_id'=>$decrypt['mata_pelajaran_id'], 'ptk_terdaftar_id'=>$decrypt['ptk_terdaftar_id']])->row_array();
-			$pembelajaran = $this->db->get_where('pembelajaran_rombel', ['tingkat_pendidikan_id'=>$decrypt['tingkat_pendidikan_id'],'mata_pelajaran_id'=>$decrypt['mata_pelajaran_id'], 'ptk_terdaftar_id'=>$decrypt['ptk_terdaftar_id'], 'semester_id'=>$decrypt['semester_id']])->result();
-			$dataPembelajaran[$decrypt['uniq']][] = $pembelajaran;
-			$gtk = $this->db->get_where('getgtk', ['ptk_terdaftar_id'=>$decrypt['ptk_terdaftar_id'], 'tahun_ajaran_id'=>$tahun_ajaran_id])->row_array();
-			foreach ($pembelajaran as $key => $value) {
-				$rombel = $this->db->get_where('getrombonganbelajar', ['rombongan_belajar_id'=>$value->rombongan_belajar_id, 'semester_id'=>$value->semester_id])->row_array();
-				$dataRombel[$decrypt['uniq']][] = $rombel;
-
-				$anggota_rombel[$decrypt['uniq']][] = $this->db->get_where('anggota_rombel', ['rombongan_belajar_id'=>$value->rombongan_belajar_id, 'semester_id'=>$value->semester_id])->result();
-			}
-
-			if($dataRombel[$decrypt['uniq']]){
-				foreach ($dataRombel[$decrypt['uniq']] as $key => $value) {
-					$peserta_didik[$decrypt['uniq']][] = $this->db->get_where('getpesertadidik', ['rombongan_belajar_id'=>$value['rombongan_belajar_id'], 'semester_id'=>$value['semester_id']])->result();
-				}
-			}
-
-
-			if($peserta_didik[$decrypt['uniq']]){
-				foreach ($peserta_didik[$decrypt['uniq']] as $key2 => $value2) {
-					foreach ($value2 as $key3 => $value3) {
-						$pengguna['aa'][] = $this->db->get_where('getpengguna', ['peserta_didik_id'=>$value3->peserta_didik_id])->row_array();
-					}
-				}
-			}else{
-				$pengguna['aa'] = [];
-			}
-
-			$object[] = [
-				'paket_soal' => [
-					'id' => $decrypt['id'],
-					'uniq' => $decrypt['uniq'],
-					'uniq_tes' => $decrypt['uniq_tes'],
-					'tingkat_pendidikan_id' => $decrypt['tingkat_pendidikan_id'],
-					'mata_pelajaran_id' => $decrypt['mata_pelajaran_id'],
-					'ptk_terdaftar_id' => $decrypt['ptk_terdaftar_id'],
-					'semester_id' => $decrypt['semester_id'],
-					'status' => $decrypt['status'],
-				],
-				'tahun_ajaran_id' => $tahun_ajaran_id,
-				'list_soal' => $list_soal,
-				'objektif_soal' => $objektif_soal,
-				'kunci_objektif' => $kunci_objektif,
-				'jadwal_tes' => $jadwal_tes,
-				'pembelajaran' => $dataPembelajaran[$decrypt['uniq']],
-				'gtk' => $gtk,
-				'anggota_rombel' => $anggota_rombel[$decrypt['uniq']],
-				'rombel' => $dataRombel[$decrypt['uniq']],
-				'peserta_didik' => $peserta_didik[$decrypt['uniq']],
-				'pengguna' => $pengguna['aa'],
-			];			
-
-			$response = [
-				'status' => true,
-				'message' => "Success",
-				'data' => $object,
-			];
-			$this->response($response);
-		}else{
-			$response = [
-				'status' => false,
-				'message' => "Error",
-			];
-			$this->response($response);
-		}
-
-	}
+	
 
 }

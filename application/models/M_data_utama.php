@@ -374,14 +374,8 @@ class M_data_utama extends CI_Model {
 		$pencarian = $this->input->get('pencarian');
 		$object = [];
 		if($this->input->get('peran')){
-			if($pencarian){
-				$this->db->like('nama', $pencarian, 'BOTH');
-				$this->db->or_like('username', $pencarian, 'BOTH');
-				$this->db->or_like('peran_id_str', $pencarian, 'BOTH');
-			}else{
-				$this->db->where(['peran_id_str'=>$this->input->get('peran')]);
-			}
-			return $this->db->get('getpengguna')->result();
+			$this->db->where(['peran_id_str'=>$this->input->get('peran')]);
+			return $this->db->get('getpengguna', 20)->result();
 		}else{
 			if($pencarian){
 				$this->db->like('username', $pencarian, 'BOTH');
