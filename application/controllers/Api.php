@@ -7,6 +7,8 @@ class Api extends RestController {
 	function __contruct()
 	{
 		parent::__contruct();
+		$CI =& get_instance();
+		$CI->load->library('kripto');
 	}
 
 	function getsekolah_post()
@@ -390,10 +392,12 @@ class Api extends RestController {
 		$this->db->order_by('semester_id', 'desc');
 		$cekData = $this->db->get('getsekolah')->result();
 		if($cekData){
+			$this->load->library('kripto');
+			$data = $this->kripto->enkripsi(json_encode($cekData), 'admin123');
 			$response = [
 				'status' => true,
 				'message' => "Success",
-				'data' => $cekData,
+				'rows' => $data,
 			];
 			$this->response($response, 200);
 		}else{
@@ -407,17 +411,10 @@ class Api extends RestController {
 
 	function getgtk_get()
 	{
-		if($this->input->get('tahun_ajaran_id')){
-			$slice = array_slice($_GET, 1);
-			$cekData = $this->db->get_where('getgtk', $slice)->result();
-			$response = [
-				'status' => true,
-				'message' => "Success",
-				'data' => $cekData,
-			];
-
-			$this->response($response, 200);
-		}
+		$header = getallheaders();
+		echo "<pre>";
+		print_r ($header);
+		echo "</pre>";
 	}
 
 	function getrombonganbelajar_get()
