@@ -124,59 +124,62 @@ if($kop_sekolah){
 	<div class="col-md">
 		<?php
 		if($kurikulum){
+			// exit();
 			?>
 			<div class="card">
 				<div class="card-header bg-donker text-light">
 					<h5>Kurikulum</h5>
 				</div>
 				<div class="card-body">
-					<table class="table table-sm">
-						<thead>
-							<tr>
-								<th class="align-middle">No</th>
-								<th class="align-middle">Tingkat</th>
-								<th class="align-middle">Kurikulum ID</th>
-								<th class="align-middle">Kurikulum</th>
-								<th class="align-middle">Rombel</th>
-								<th class="align-middle">L</th>
-								<th class="align-middle">P</th>
-								<th class="align-middle">Jml</th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php foreach ($kurikulum as $key => $value): $key++ ?>
-								<?php
-								$CI->load->model('m_data_utama');
-								$rombel_kurikulum = $CI->m_data_utama->rombel_kurikulum($value->kurikulum_id);
-								?>
+					<div class="table-responsive">
+						<table class="table table-sm">
+							<thead>
 								<tr>
-									<td><?= $key ?></td>
-									<td><?= $value->tingkat_pendidikan_id ?></td>
-									<td><?= $value->kurikulum_id ?></td>
-									<td><?= $value->kurikulum_id_str ?></td>
-									<?php
-									if($rombel_kurikulum){
-										echo "<td>".count($rombel_kurikulum)."</td>";
-										foreach ($rombel_kurikulum as $key1 => $value1) {
-											$pd_rombel_l = $CI->m_data_utama->pd_rombel_l($value1->rombongan_belajar_id);
-											$pd_rombel_p = $CI->m_data_utama->pd_rombel_p($value1->rombongan_belajar_id);
-											$jml_siswa_l[$key][] = count($pd_rombel_l);
-											$jml_siswa_p[$key][] = count($pd_rombel_p);
-										}
-										$tJml_siswa_l = array_sum($jml_siswa_l[$key]);
-										$tJml_siswa_p = array_sum($jml_siswa_p[$key]);
-										$Total_siswa = $tJml_siswa_l + $tJml_siswa_p;
-										echo "<td>".$tJml_siswa_l."</td>";
-										echo "<td>".$tJml_siswa_p."</td>";
-										echo "<td>".$Total_siswa."</td>";
-									}else{
-										echo "<td colspan='4'>-</td>";
-									}
-									?>
+									<th class="align-middle">No</th>
+									<th class="align-middle">Tingkat</th>
+									<th class="align-middle">Kurikulum ID</th>
+									<th class="align-middle">Kurikulum</th>
+									<th class="align-middle">Rombel</th>
+									<th class="align-middle">L</th>
+									<th class="align-middle">P</th>
+									<th class="align-middle">Jml</th>
 								</tr>
-							<?php endforeach ?>
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								<?php foreach ($kurikulum as $key => $value): $key++ ?>
+									<?php
+									$CI->load->model('m_data_utama');
+									$rombel_kurikulum = $CI->m_data_utama->rombel_kurikulum($value->kurikulum_id);
+									?>
+									<tr>
+										<td><?= $key ?></td>
+										<td><?= $value->tingkat_pendidikan_id ?></td>
+										<td><?= $value->kurikulum_id ?></td>
+										<td><?= $value->kurikulum_id_str ?></td>
+										<?php
+										if($rombel_kurikulum){
+											echo "<td>".count($rombel_kurikulum)."</td>";
+											foreach ($rombel_kurikulum as $key1 => $value1) {
+												$pd_rombel_l = $CI->m_data_utama->pd_rombel_l($value1->rombongan_belajar_id);
+												$pd_rombel_p = $CI->m_data_utama->pd_rombel_p($value1->rombongan_belajar_id);
+												$jml_siswa_l[$key][] = count($pd_rombel_l);
+												$jml_siswa_p[$key][] = count($pd_rombel_p);
+											}
+											$tJml_siswa_l = array_sum($jml_siswa_l[$key]);
+											$tJml_siswa_p = array_sum($jml_siswa_p[$key]);
+											$Total_siswa = $tJml_siswa_l + $tJml_siswa_p;
+											echo "<td>".$tJml_siswa_l."</td>";
+											echo "<td>".$tJml_siswa_p."</td>";
+											echo "<td>".$Total_siswa."</td>";
+										}else{
+											echo "<td colspan='4'>-</td>";
+										}
+										?>
+									</tr>
+								<?php endforeach ?>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 			<?php
