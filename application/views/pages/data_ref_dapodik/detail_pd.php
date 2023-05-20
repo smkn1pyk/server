@@ -24,7 +24,7 @@
 						</tr>
 						<tr>
 							<td>Tempat/Tanggal Lahir</td>
-							<td><?= $detail_pd['tempat_lahir'] ?>/<?= $detail_pd['tanggal_lahir'] ?></td>
+							<td><?= $detail_pd['tempat_lahir'] ?>/<?= date('d-m-Y', strtotime($detail_pd['tanggal_lahir'])) ?></td>
 						</tr>
 						<tr>
 							<td>Agama</td>
