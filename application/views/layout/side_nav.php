@@ -29,30 +29,36 @@
 						<a class="nav-link" href="<?= base_url('data_ref_dapodik/pengguna') ?>">Pengguna</a>
 					</nav>
 				</div>
-				<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#exam" aria-expanded="false" aria-controls="collapseLayouts">
-					<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-					Exam
-					<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-				</a>
-				<div class="collapse" id="exam" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-					<nav class="sb-sidenav-menu-nested nav">
-						<a class="nav-link" href="<?= base_url('exam/tes') ?>">Data Tes</a>
-						<a class="nav-link" href="<?= base_url('exam/paket_soal') ?>">Paket Soal</a>
-						<a class="nav-link" href="<?= base_url('exam/jadwal_tes') ?>">Jadwal Tes</a>
-					</nav>
-				</div>
+				<?php
+				if($this->session->userdata('ptk_id')){
+					?>
+					<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#exam" aria-expanded="false" aria-controls="collapseLayouts">
+						<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+						Exam
+						<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+					</a>
+					<div class="collapse" id="exam" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+						<nav class="sb-sidenav-menu-nested nav">
+							<a class="nav-link" href="<?= base_url('exam/tes') ?>">Data Tes</a>
+							<a class="nav-link" href="<?= base_url('exam/paket_soal') ?>">Paket Soal</a>
+							<a class="nav-link" href="<?= base_url('exam/jadwal_tes') ?>">Jadwal Tes</a>
+						</nav>
+					</div>
 
-				<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#kelulusan" aria-expanded="false" aria-controls="collapseLayouts">
-					<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-					Kelulusan
-					<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-				</a>
-				<div class="collapse" id="kelulusan" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-					<nav class="sb-sidenav-menu-nested nav">
-						<a class="nav-link" href="<?= base_url('kelulusan') ?>">Informasi</a>
-						<a class="nav-link" href="<?= base_url('kelulusan/data_lulusan') ?>">Data Lulusan</a>
-					</nav>
-				</div>
+					<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#kelulusan" aria-expanded="false" aria-controls="collapseLayouts">
+						<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+						Kelulusan
+						<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+					</a>
+					<div class="collapse" id="kelulusan" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+						<nav class="sb-sidenav-menu-nested nav">
+							<a class="nav-link" href="<?= base_url('kelulusan') ?>">Informasi</a>
+							<a class="nav-link" href="<?= base_url('kelulusan/data_lulusan') ?>">Data Lulusan</a>
+						</nav>
+					</div>
+					<?php
+				}
+				?>
 			</div>
 		</div>
 		<div class="sb-sidenav-footer">
