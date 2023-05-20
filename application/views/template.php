@@ -53,12 +53,6 @@ if(!$this->session->userdata('akun')){
 	</style>
 </head>
 <body class="sb-nav-fixed">
-	<?php
-	if($this->session->userdata('peran_id_str')=='Peserta Didik'){
-		?> <div class="alert-danger text-center p-5 mt-3"> Mohon maaf <b><i><?= $this->session->userdata('nama') ?></i></b>, anda tidak diizinkan mengakses halaman ini ! <br> <a href="<?= base_url('auth/logout') ?>" class="btn btn-dark"><i class="fas fa-sign-out"></i> Logout </a> </div> <?php
-		exit();
-	}
-	?>
 	<?php require('layout/top_nav.php'); ?>
 	<div id="layoutSidenav">
 		<?php require('layout/side_nav.php') ?>

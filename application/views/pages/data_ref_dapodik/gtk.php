@@ -28,7 +28,7 @@
 	</div>
 	<div class="card-body">
 		<?php if($gtk){ ?>
-			<?= $jml_gtk['jml'] ?>
+			Jumlah: <?= count($gtk) ?> Data
 			<div class="table-responsive">
 				<table class="table table-striped table-bordered">
 					<thead>
@@ -47,7 +47,7 @@
 						<?php foreach ($gtk as $key => $value): $key++ ?>
 							<tr>
 								<td><?= $key ?></td>
-								<td><?= $value->nama ?></td>
+								<td><a href="<?= base_url('data_ref_dapodik/detail_gtk/'.$value->ptk_id) ?>"><?= $value->nama ?></a></td>
 								<td><?= $value->nik ?></td>
 								<td><?= $value->nip ?></td>
 								<td><?= $value->jenis_ptk_id_str ?></td>

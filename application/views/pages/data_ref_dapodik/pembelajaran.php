@@ -72,7 +72,7 @@
 						<?php foreach ($pembelajaran as $key => $value): $key++ ?>
 							<?php
 							$rombel_id = $CI->m_data_utama->getrombonganbelajar_id($value->rombongan_belajar_id);
-							$gtk_id = $CI->m_data_utama->gtk_id($value->ptk_terdaftar_id);
+							$getgtk_id = $CI->m_data_utama->getgtk_id($value->ptk_id);
 							$n++;
 							$encrypt = $this->encryption->encrypt(json_encode($value));
 							?>
@@ -81,7 +81,13 @@
 								<td><?= $n ?></td>
 								<td><?= $value->mata_pelajaran_id ?></td>
 								<td><?= $value->mata_pelajaran_id_str ?></td>
-								<td><?= $gtk_id['nama'] ?></td>
+								<td>
+									<?php
+									if($getgtk_id){
+										echo $getgtk_id['nama'];
+									}
+									?>
+								</td>
 								<td><?= $value->status_di_kurikulum_str ?></td>
 								<td>
 									<?php

@@ -30,7 +30,7 @@ class Auth extends CI_Controller {
 						'akun' => $rst
 					);
 					$this->session->set_userdata( $array );
-					echo '<script>window.location.href = "app";</script>';
+					echo '<script>window.location.href = "";</script>';
 				}
 			}else{
 				echo "Username: ".$this->input->post('username')." tidak ditemukan";
@@ -48,7 +48,7 @@ class Auth extends CI_Controller {
 					if($cekPtk){
 						$merge = array_merge($pilih, $cekPtk);
 						$this->session->set_userdata( $merge );
-						echo '<script>window.location.href = "app";</script>';
+						echo '<script>window.location.href = "";</script>';
 					}else{
 						if($pilih['ptk_id']=='1'){							
 							$this->session->set_userdata( $this->session->userdata('akun')[0] );
@@ -58,9 +58,14 @@ class Auth extends CI_Controller {
 						}
 					}
 				}else{
-					?> <div class="alert-danger p-3"> Mohon maaf, saat ini aplikasi sedang dalam masa pengembangan, anda belum bisa mengakses halaman ini</div> <?php
-				// $this->session->set_userdata( $pilih );
-				// echo '<script>window.location.href = "app";</script>';
+					$cekPD = $this->db->get_where('getpesertadidik', ['peserta_didik_id'=>$pilih['peserta_didik_id'], 'semester_id'=>$pilih['semester_id']])->row_array();
+					if($cekPD){
+						$merge = array_merge($pilih, $cekPD);
+						$this->session->set_userdata( $merge );
+						echo '<script>window.location.href = "";</script>';
+					}else{
+						?> <div class="alert-danger p-3"> Mogon maaf, Akun dengan Nama: <b><?= $pilih['nama'] ?></b> pada tahun ajaran <b><?= $pilih['semester_id'] ?></b> tidak ditemukan! </div> <?php
+					}
 				}
 			}else{
 				echo "Gagal mengambil data";

@@ -43,16 +43,15 @@
                                         <div class="form-floating mb-3">
                                             <select class="form-control" name="semester_id">
                                                 <?php foreach ($semester_id as $key => $value): ?>
-                                                    <?php 
-                                                    if(date('m')>=7){
-                                                        $sm2 = date('Y').'2';
-                                                        ?> <option><?= $sm2 ?></option> <?php
-                                                    }
+                                                    <?php
+                                                    $tahun = substr($value['semester_id'], 0, 4);
+                                                    $tahun1 = $tahun+1;
+                                                    $semester = substr($value['semester_id'], 4);
                                                     ?>
-                                                    <option><?= $value['semester_id'] ?></option>
+                                                    <option value="<?= $value['semester_id'] ?>"><?= $tahun.'/'.$tahun1.' Semester '.$semester ?></option>
                                                 <?php endforeach ?>
                                             </select>
-                                            <label>Semester ID</label>
+                                            <label>Tahun Ajaran</label>
                                         </div>
                                         <div class="form-check mb-3">
                                             <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />

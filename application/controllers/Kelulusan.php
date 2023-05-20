@@ -6,7 +6,7 @@ class Kelulusan extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		if(!$this->session->userdata('ptk_terdaftar_id')){
+		if(!$this->session->userdata('username')){
 			$this->session->sess_destroy();
 			redirect('.','refresh');
 		}

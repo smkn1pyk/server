@@ -387,6 +387,38 @@ class Api extends RestController {
 		}
 	}
 
+	function ambil_data_get($method=null)
+	{
+		$header = getallheaders();
+		if($method){
+			if($method=='getgtk'){
+				$where = ['tahun_ajaran_id'=>substr($header['semester_id'], 0, 4)];
+			}else
+			if($method=='rwy_kepangkatan'||$method=='rwy_pend_formal'||$method=='getpengguna'){
+				$where = [];
+			}else{
+				$where = ['semester_id'=>$header['semester_id']];
+			}
+			$cekData = $this->db->get_where($method, $where)->result();
+			if($cekData){
+				$this->load->library('kripto');
+				$data = $this->kripto->enkripsi(json_encode($cekData), 'admin123');
+				$response = [
+					'status' => true,
+					'message' => "Success",
+					'rows' => $data,
+				];
+				$this->response($response, 200);
+			}else{
+				$response = [
+					'status' => true,
+					'message' => "0 Results",
+				];
+				$this->response($response, 200);
+			}
+		}
+	}
+
 	function getsekolah_get()
 	{
 		$this->db->order_by('semester_id', 'desc');
@@ -412,9 +444,24 @@ class Api extends RestController {
 	function getgtk_get()
 	{
 		$header = getallheaders();
-		echo "<pre>";
-		print_r ($header);
-		echo "</pre>";
+		$semester_id = substr($header['semester_id'], 0, 4);
+		$cekData = $this->db->get_where('getgtk', ['tahun_ajaran_id'=>$semester_id])->result();
+		if($cekData){
+			$this->load->library('kripto');
+			$data = $this->kripto->enkripsi(json_encode($cekData), 'admin123');
+			$response = [
+				'status' => true,
+				'message' => "Success",
+				'rows' => $data,
+			];
+			$this->response($response, 200);
+		}else{
+			$response = [
+				'status' => true,
+				'message' => "0 Results",
+			];
+			$this->response($response, 200);
+		}
 	}
 
 	function getrombonganbelajar_get()

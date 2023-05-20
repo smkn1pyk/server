@@ -88,6 +88,25 @@ class Data_ref_dapodik extends CI_Controller {
 		$this->load->view('pages/data_ref_dapodik/gtk', $data, FALSE);
 	}
 
+	function detail_gtk($id=null)
+	{
+		$data = [
+			'title' => 'Detail GTK',
+			'dataget' => base_url('data_ref_dapodik/data_detail_gtk/'.$id),
+		];
+		$this->load->view('template', $data, FALSE);
+	}
+
+	function data_detail_gtk($id=null)
+	{
+		$data = [
+			'detail_gtk' => $this->m_data_utama->getgtk_id($id),
+			'rwy_pend_formal' => $this->m_data_utama->rwy_pend_formal_id($id),
+			'rwy_kepangkatan' => $this->m_data_utama->rwy_kepangkatan_id($id),
+		];
+		$this->load->view('pages/data_ref_dapodik/detail_gtk', $data, FALSE);
+	}
+
 	function pd()
 	{
 		$data = [
