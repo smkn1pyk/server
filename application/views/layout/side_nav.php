@@ -8,10 +8,16 @@
 					Dashboard
 				</a>
 				<div class="sb-sidenav-menu-heading">Interface</div>
-				<a class="nav-link" href="<?= base_url('webservice') ?>">
-					<div class="sb-nav-link-icon"><i class="fas fa-sync-alt"></i></div>
-					Singkronisasi Data
-				</a>
+				<?php
+				if($this->session->userdata('ptk_id')){
+					?>
+					<a class="nav-link" href="<?= base_url('webservice') ?>">
+						<div class="sb-nav-link-icon"><i class="fas fa-sync-alt"></i></div>
+						Singkronisasi Data
+					</a>
+					<?php
+				}
+				?>
 
 				<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
 					<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>

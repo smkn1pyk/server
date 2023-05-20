@@ -73,7 +73,8 @@ class M_data_utama extends CI_Model {
 			}else{
 				return $this->db->get_where('getgtk', ['ptk_terdaftar_id'=>$this->session->userdata('ptk_terdaftar_id'), 'tahun_ajaran_id'=>$this->session->userdata('tahun_ajaran_id')])->result();
 			}
-		}else{
+		}else
+		if($this->session->userdata('peserta_didik_id')){
 			if($pencarian){
 				$this->db->like('nama', $pencarian, 'BOTH');
 				$this->db->where('tahun_ajaran_id', $this->session->userdata('tahun_ajaran_id'));
@@ -88,12 +89,14 @@ class M_data_utama extends CI_Model {
 				return $this->db->get('getgtk')->result();
 			}
 			if($this->input->get('jenis_ptk')){
+				$this->db->select('nama, nip');
 				$this->db->where(['tahun_ajaran_id'=>$this->session->userdata('tahun_ajaran_id'), 'jenis_ptk_id'=> $this->input->get('jenis_ptk')]);
 				$this->db->order_by('nama', 'asc');
 				return $this->db->get('getgtk')->result();
 			}else{
-				$this->db->order_by('nama', 'asc');
+				$this->db->select('ptk_id, ptk_terdaftar_id, jenis_ptk_id, jenis_ptk_id_str, status_kepegawaian_id_str, nama, nip');
 				$this->db->where(['tahun_ajaran_id'=>$this->session->userdata('tahun_ajaran_id'), 'jenis_ptk_id'=>$jenis_ptk_awal]);
+				$this->db->order_by('nama', 'asc');
 				return $this->db->get('getgtk')->result();
 			}
 		}
@@ -102,7 +105,15 @@ class M_data_utama extends CI_Model {
 	function getgtk_id($ptk_id)
 	{
 		$tahun_ajaran_id = $this->session->userdata('tahun_ajaran_id');
-		return $this->db->get_where('getgtk', ['ptk_id'=>$ptk_id, 'tahun_ajaran_id'=>$tahun_ajaran_id])->row_array();
+		if($this->session->userdata('ptk_id')){
+			$this->db->where(['ptk_id'=>$ptk_id,'tahun_ajaran_id'=>$tahun_ajaran_id]);
+			return $this->db->get('getgtk')->row_array();
+		}else
+		if($this->session->userdata('peserta_didik_id')){
+			$this->db->select('nama, nip, jenis_kelamin, tempat_lahir, tanggal_lahir, agama_id_str, jenis_ptk_id_str, bidang_studi_terakhir');
+			$this->db->where(['ptk_id'=>$ptk_id,'tahun_ajaran_id'=>$tahun_ajaran_id]);
+			return $this->db->get('getgtk')->row_array();
+		}
 	}
 
 	function jenis_ptk()

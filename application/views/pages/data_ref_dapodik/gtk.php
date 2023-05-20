@@ -35,11 +35,8 @@
 						<tr>
 							<th>No</th>
 							<th>Nama</th>
-							<th>NIK</th>
 							<th>NIP</th>
 							<th>Jenis PTK</th>
-							<th>Status Kepegawaian</th>
-							<th>Golongan</th>
 							<th>Detail</th>
 						</tr>
 					</thead>
@@ -48,11 +45,8 @@
 							<tr>
 								<td><?= $key ?></td>
 								<td><a href="<?= base_url('data_ref_dapodik/detail_gtk/'.$value->ptk_id) ?>"><?= $value->nama ?></a></td>
-								<td><?= $value->nik ?></td>
 								<td><?= $value->nip ?></td>
 								<td><?= $value->jenis_ptk_id_str ?></td>
-								<td><?= $value->status_kepegawaian_id_str ?></td>
-								<td><?= $value->pangkat_golongan_terakhir ?></td>
 								<td class="text-center">
 									<button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" hx-post="<?= base_url('form/get/rinci/rwy_pend_formal/'.$value->ptk_id) ?>" hx-target=".modal-body"><i class="fas fa-book"></i></button>
 									<button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal" hx-post="<?= base_url('form/get/rinci/rwy_kepangkatan/'.$value->ptk_id) ?>" hx-target=".modal-body"><i class="fab fa-black-tie"></i></button>
