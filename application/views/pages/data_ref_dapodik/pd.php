@@ -40,8 +40,8 @@
 					<?php foreach ($pd as $key => $value): $key++ ?>
 						<tr>
 							<td><?= $key ?></td>
-							<td><?= $value->nisn ?></td>
-							<td><?= $value->nama ?></td>
+							<td><a href="<?= base_url('data_ref_dapodik/detail_pd/'.$value->peserta_didik_id) ?>"><?= $value->nisn ?></a></td>
+							<td><a href="<?= base_url('data_ref_dapodik/detail_pd/'.$value->peserta_didik_id) ?>"><?= $value->nama ?></a></td>
 							<td><?= $value->nik ?></td>
 							<td><?= $value->tanggal_lahir ?></td>
 							<td><?= $value->nama_rombel ?></td>

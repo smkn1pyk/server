@@ -125,6 +125,23 @@ class Data_ref_dapodik extends CI_Controller {
 		$this->load->view('pages/data_ref_dapodik/pd', $data, FALSE);
 	}
 
+	function detail_pd($id=null)
+	{
+		$data = [
+			'title' => 'Detail PD',
+			'dataget' => base_url('data_ref_dapodik/data_detail_pd/'.$id),
+		];
+		$this->load->view('template', $data, FALSE);
+	}
+
+	function data_detail_pd($id=null)
+	{
+		$data = [
+			'detail_pd' => $this->m_data_utama->getpesertadidik_id($id),
+		];
+		$this->load->view('pages/data_ref_dapodik/detail_pd', $data, FALSE);
+	}
+
 	function rombel()
 	{
 		$data = [
