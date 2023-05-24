@@ -120,7 +120,7 @@
 	</div>
 </div>
 <?php
-// echo "<pre>";
-// print_r ($detail_pd);
-// echo "</pre>";
+echo "<pre>";
+print_r ($detail_pd);
+echo "</pre>";
 ?>
