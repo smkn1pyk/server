@@ -26,11 +26,16 @@ class App extends CI_Controller {
 			if(!$this->session->userdata('semester_id')){
 				$this->load->view('auth/cekakun', FALSE);
 			}else{
-				$data = [
-					'title' => "Dashboard",
-					'dataget' => base_url('app/dashboard'),
-				];
-				$this->load->view('template', $data);
+				if($this->session->userdata('ptk_id')){
+					$data = [
+						'title' => "Dashboard",
+						'dataget' => base_url('app/dashboard'),
+					];
+					$this->load->view('template', $data);
+				}else
+				if($this->session->userdata('peserta_didik_id')){
+					redirect('data_ref_dapodik/detail_pd/'.$this->session->userdata('peserta_didik_id'),'refresh');
+				}
 			}
 			
 		}else{

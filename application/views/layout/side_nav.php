@@ -26,13 +26,25 @@
 				</a>
 				<div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 					<nav class="sb-sidenav-menu-nested nav">
-						<a class="nav-link" href="<?= base_url('data_ref_dapodik/sekolah') ?>">Sekolah</a>
-						<a class="nav-link" href="<?= base_url('data_ref_dapodik/gtk') ?>">GTK</a>
-						<a class="nav-link" href="<?= base_url('data_ref_dapodik/pd') ?>">Peserta Didik</a>
-						<a class="nav-link" href="<?= base_url('data_ref_dapodik/rombel') ?>">Rombongan Belajar</a>
-						<a class="nav-link" href="<?= base_url('data_ref_dapodik/anggota_rombel') ?>">Anggota Rombel</a>
+						<?php
+						if($this->session->userdata('ptk_id')){
+							?>
+							<a class="nav-link" href="<?= base_url('data_ref_dapodik/sekolah') ?>">Sekolah</a>
+							<a class="nav-link" href="<?= base_url('data_ref_dapodik/gtk') ?>">GTK</a>
+							<a class="nav-link" href="<?= base_url('data_ref_dapodik/pd') ?>">Peserta Didik</a>
+							<a class="nav-link" href="<?= base_url('data_ref_dapodik/rombel') ?>">Rombongan Belajar</a>
+							<a class="nav-link" href="<?= base_url('data_ref_dapodik/anggota_rombel') ?>">Anggota Rombel</a>
+							<?php
+						}
+						?>
 						<a class="nav-link" href="<?= base_url('data_ref_dapodik/pembelajaran') ?>">Pembelajaran</a>
-						<a class="nav-link" href="<?= base_url('data_ref_dapodik/pengguna') ?>">Pengguna</a>
+						<?php
+						if($this->session->userdata('ptk_id')){
+							?>
+							<a class="nav-link" href="<?= base_url('data_ref_dapodik/pengguna') ?>">Pengguna</a>
+							<?php
+						}
+						?>
 					</nav>
 				</div>
 				<?php
