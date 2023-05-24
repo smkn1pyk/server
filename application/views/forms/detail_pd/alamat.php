@@ -54,10 +54,6 @@ if($id){
 							<td>Alat Transportasi</td>
 							<td><?= $detail_pd['Alat_Transportasi'] ?></td>
 						</tr>
-						<tr>
-							<td>Anak Keberapa (Berdasarkan Kartu Keluarga)</td>
-							<td><?= $detail_pd['anak_keberapa'] ?> </td>
-						</tr>
 					</table>
 				</div>
 			</div>

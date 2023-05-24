@@ -54,6 +54,10 @@ if($id){
 							<td>Berat Badan</td>
 							<td><?= $detail_pd['berat_badan'] ?></td>
 						</tr>
+						<tr>
+							<td>Anak Keberapa (Berdasarkan Kartu Keluarga)</td>
+							<td><?= $detail_pd['anak_keberapa'] ?> </td>
+						</tr>
 					</table>
 				</div>
 			</div>
