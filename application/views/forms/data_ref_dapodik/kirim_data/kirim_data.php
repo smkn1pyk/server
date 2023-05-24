@@ -67,7 +67,7 @@ if($id){
 			<?php
 		}
 	}else
-	if($id=='anggota_rombel'){
+	if($id=='anggota_rombel'||$id=='getPesertaDidik'){
 		$rombel = $this->m_data_utama->getrombonganbelajar();
 		if($rombel){
 			?>
@@ -98,7 +98,40 @@ if($id){
 			</div>
 			<?php
 		}
-	}else{
+	}else
+	if($id=='getgtk'){
+		$rombel = $this->m_data_utama->jenis_ptk();
+		if($rombel){
+			?>
+			<div class="card">
+				<div class="card-header">
+					<form hx-get="<?= base_url('form/postdapodik_data/'.$id) ?>" hx-target="#results" class="form-inline">
+						<div class="form-check m-3">
+							<input type="checkbox" name="checkAll" id="checkAll" class="form-check-input">
+							<label for="checkAll">Pilih Semua</label>
+						</div>
+						<div class="form-floating m-3">
+							<select class="form-select" name="jenis_ptk" hx-get="<?= base_url('form/postdapodik_data/'.$id) ?>" hx-target="#results" autofocus>
+								<option value="">...</option>
+								<?php foreach ($rombel as $key => $value): ?>
+									<option value="<?= $value->jenis_ptk_id ?>"><?= $value->jenis_ptk_id_str ?></option>
+								<?php endforeach ?>
+							</select>
+							<label>Rombel</label>
+						</div>
+						<div class="d-block">
+							<button class="btn btn-primary"><i class="fas fa-search"></i></button>
+						</div>
+					</form>
+				</div>
+				<div class="card-body" hx-get="<?= base_url('form/postdapodik_data/'.$id) ?>" hx-target="#results" hx-trigger="load">
+					<div id="results" style="max-height: 600px;overflow: auto;"></div>
+				</div>
+			</div>
+			<?php
+		}
+	}
+	else{
 		?>
 		<div class="card">
 			<div class="card-header">

@@ -80,8 +80,84 @@ class Data_ref_dapodik extends CI_Controller {
 		$this->load->view('template', $data, FALSE);
 	}
 
-	function data_gtk()
+	function data_gtk($aksi=null, $id=null)
 	{
+		if($aksi){
+			if($aksi=='import_gtk'){
+				$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+				if($_FILES){
+					$spreadsheet = $reader->load($_FILES['file_upload']['tmp_name']);
+					$sheetData = $spreadsheet->getActiveSheet()->toArray();
+					echo $sheetData[0][0];
+					if ($sheetData[0][0]=='Daftar Guru'||$sheetData[0][0]=='Daftar Tenaga Kependidikan'){
+						$sekolah = $this->m_data_utama->getsekolah()[0]->nama;
+						if($sheetData[1][0]==$sekolah){
+							$jml = count($sheetData);
+
+							$berhasil = [];
+							$gagal = [];
+							for ($i=5; $i < $jml; $i++) { 
+								$nama = $sheetData[$i][1];
+								$nik = $sheetData[$i][44];
+
+								$gtk = [
+									'nama' => $sheetData[$i][1],
+									'nuptk' => $sheetData[$i][2],
+									'alamat' => $sheetData[$i][10],
+									'rt' => $sheetData[$i][11],
+									'rw' => $sheetData[$i][12],
+									'dusun' => $sheetData[$i][13],
+									'kelurahan' => $sheetData[$i][14],
+									'kecamatan' => $sheetData[$i][15],
+									'kode_pos' => $sheetData[$i][16],
+									'telepon' => $sheetData[$i][17],
+									'hp' => $sheetData[$i][18],
+									'email' => $sheetData[$i][19],
+									'tugas_tambahan' => $sheetData[$i][20],
+									'sk_cpns' => $sheetData[$i][21],
+									'tanggal_cpns' => $sheetData[$i][22],
+									'sk_pengangkatan' => $sheetData[$i][23],
+									'tmt_pengangkatan' => $sheetData[$i][24],
+									'lembaga_pengangkatan' => $sheetData[$i][25],
+									'sumber_gaji' => $sheetData[$i][27],
+									'nama_ibu_kandung' => $sheetData[$i][28],
+									'status_perkawinan' => $sheetData[$i][29],
+									'nama_suami_istri' => $sheetData[$i][30],
+									'nip_suami_istri' => $sheetData[$i][31],
+									'pekerjaan_suami_istri' => $sheetData[$i][32],
+									'tmt_pns_suami_istri' => $sheetData[$i][33],
+									'sudah_lisensi_kepala_sekolah' => $sheetData[$i][34],
+									'pernah_diklat_kepengawasan' => $sheetData[$i][35],
+									'keahlian_braile' => $sheetData[$i][36],
+									'keahlian_bahasa_isyarat' => $sheetData[$i][37],
+									'npwp' => $sheetData[$i][38],
+									'nama_wajib_pajak' => $sheetData[$i][39],
+									// 'nik' => $sheetData[$i][44],
+									'no_kk' => $sheetData[$i][45],
+									'karpeg' => $sheetData[$i][46],
+									'karsi_karsu' => $sheetData[$i][47],
+									'lintang' => $sheetData[$i][48],
+									'bujur' => $sheetData[$i][49],
+									'nuks' => $sheetData[$i][50],
+								];
+								$this->db->where(['nik'=>$nik, 'nama'=>$nama, 'tahun_ajaran_id'=>$this->session->userdata('tahun_ajaran_id')]);
+								$this->db->update('getgtk', $gtk);
+								if($this->db->affected_rows()>>0){
+									$berhasil[] = 1;
+								}else{
+									$gagal[] = 1;
+								}
+							}
+							?> <div class="alert alert-info p-3"> <?= array_sum($berhasil) ?> data berhasil diperbaharui<br> <?= array_sum($gagal) ?> data gagal diperbaharui. </div> <?php
+						}else{
+							?> <div class="alert alert-danger"> Bukan <?= $sekolah ?> </div> <?php
+						}
+					}else{
+						?> <div class="alert alert-danger"> Bukan File Peserta Didik Dapodik </div> <?php
+					}
+				}
+			}
+		}
 		$data = [
 			'jenis_ptk' => $this->m_data_utama->jenis_ptk(),
 			'jml_gtk' => $this->m_data_utama->jml_gtk(),
@@ -102,6 +178,7 @@ class Data_ref_dapodik extends CI_Controller {
 	function data_detail_gtk($id=null)
 	{
 		$data = [
+			'id' => $id,
 			'detail_gtk' => $this->m_data_utama->getgtk_id($id),
 			'rwy_pend_formal' => $this->m_data_utama->rwy_pend_formal_id($id),
 			'rwy_kepangkatan' => $this->m_data_utama->rwy_kepangkatan_id($id),

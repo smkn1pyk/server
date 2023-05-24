@@ -1,30 +1,33 @@
 <div class="card">
 	<div class="card-header">
-		<?php
-		if($jenis_ptk){
-			?>
-			<div class="form-floating">
-				<select class="form-select" name="jenis_ptk" hx-get="<?= base_url('data_ref_dapodik/data_gtk') ?>" hx-target="#data">
-					<option value="">...</option>
-					<?php foreach ($jenis_ptk as $key => $value): ?>
-						<?php
-						if($this->input->get('jenis_ptk')){
-							if($value->jenis_ptk_id==$this->input->get('jenis_ptk')){
-								?> <option value="<?= $value->jenis_ptk_id ?>" selected><?= $value->jenis_ptk_id_str ?></option> <?php
+		<div class="form-inline">
+			<?php
+			if($jenis_ptk){
+				?>
+				<div class="form-floating">
+					<select class="form-select" name="jenis_ptk" hx-get="<?= base_url('data_ref_dapodik/data_gtk') ?>" hx-target="#data">
+						<option value="">...</option>
+						<?php foreach ($jenis_ptk as $key => $value): ?>
+							<?php
+							if($this->input->get('jenis_ptk')){
+								if($value->jenis_ptk_id==$this->input->get('jenis_ptk')){
+									?> <option value="<?= $value->jenis_ptk_id ?>" selected><?= $value->jenis_ptk_id_str ?></option> <?php
+								}else{
+									?> <option value="<?= $value->jenis_ptk_id ?>"><?= $value->jenis_ptk_id_str ?></option> <?php
+								}
 							}else{
 								?> <option value="<?= $value->jenis_ptk_id ?>"><?= $value->jenis_ptk_id_str ?></option> <?php
 							}
-						}else{
-							?> <option value="<?= $value->jenis_ptk_id ?>"><?= $value->jenis_ptk_id_str ?></option> <?php
-						}
-						?>
-					<?php endforeach ?>
-				</select>
-				<label>Jenis Ptk</label>
-			</div>
-			<?php
-		}
-		?>
+							?>
+						<?php endforeach ?>
+					</select>
+					<label>Jenis Ptk</label>
+				</div>
+				<?php
+			}
+			?>
+			<button class="btn btn-primary ml-2" data-bs-target="#exampleModal" data-bs-toggle="modal" hx-post="<?= base_url('form/get/data_ref_dapodik/import_gtk') ?>" hx-target=".modal-body"><i class="fas fa-file-excel"></i></button>
+		</div>
 	</div>
 	<div class="card-body">
 		<?php if($gtk){ ?>

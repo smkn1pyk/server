@@ -1,4 +1,46 @@
+<div class="card">
+	<div class="card-header">
+		<button class="btn btn-info" data-bs-target="#exampleModal" data-bs-toggle="modal" hx-post="<?= base_url('form/get/detail_gtk/biodata/'.$id) ?>" hx-target=".modal-body"><i class="fas fa-user-graduate"></i> Biodata</button>
+		<button class="btn btn-primary" data-bs-target="#exampleModal" data-bs-toggle="modal" hx-post="<?= base_url('form/get/detail_gtk/anggota_keluarga/'.$id) ?>" hx-target=".modal-body"><i class="fas fa-users"></i> Anggota Keluarga</button>
+		<button class="btn btn-success" data-bs-target="#exampleModal" data-bs-toggle="modal" hx-post="<?= base_url('form/get/detail_gtk/alamat/'.$id) ?>" hx-target=".modal-body"><i class="fas fa-map"></i> Alamat</button>
+		<button class="btn btn-warning" data-bs-target="#exampleModal" data-bs-toggle="modal" hx-post="<?= base_url('form/get/detail_gtk/kepegawaian/'.$id) ?>" hx-target=".modal-body"><i class="fas fa-user-graduate"></i> Kepegawaian</button>
+		<button class="btn btn-dark" data-bs-target="#exampleModal" data-bs-toggle="modal" hx-post="<?= base_url('form/get/detail_gtk/rwy_pend_formal/'.$id) ?>" hx-target=".modal-body"><i class="fas fa-user-graduate"></i> Rwy Pendidikan</button>
+		<button class="btn btn-secondary" data-bs-target="#exampleModal" data-bs-toggle="modal" hx-post="<?= base_url('form/get/detail_gtk/rwy_kepangkatan/'.$id) ?>" hx-target=".modal-body"><i class="fas fa-user-graduate"></i> Rwy Kepangkatan</button>
+		
+	</div>
+	<div class="card-body">
+		<?php
+		if($detail_gtk){
+			?>
+			<div class="table-responsive">
+				<table class="table table-striped">
+					<tr>
+						<td>Nama</td>
+						<td><?= $detail_gtk['nama'] ?></td>
+					</tr>
+					<tr>
+						<td>Jenis Kelamin</td>
+						<td><?= $detail_gtk['jenis_kelamin'] ?></td>
+					</tr>
+					<tr>
+						<td>NIK</td>
+						<td><?= $detail_gtk['nik'] ?></td>
+					</tr>
+					<tr>
+						<td>NIP</td>
+						<td><?= $detail_gtk['nip'] ?></td>
+					</tr>
+				</table>
+			</div>
+			<?php
+		}else{
+			?> <div class="alert-danger p-3">Terjadi kesalahan sistem, data tidak ditemukan! </div> <?php
+		}
+		?>
+	</div>
+</div>
 <?php
+exit();
 if($detail_gtk){
 	?>
 	<div class="row">
