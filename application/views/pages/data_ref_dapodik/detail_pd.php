@@ -29,36 +29,32 @@
 								<td><?= $detail_pd['nisn'] ?></td>
 							</tr>
 							<tr>
-								<td>NIK</td>
-								<td><?= $detail_pd['nik'] ?></td>
-							</tr>
-							<tr>
-								<td>NO KK</td>
-								<td><?= $detail_pd['no_kk'] ?></td>
-							</tr>
-							<tr>
 								<td>Tempat/Tanggal Lahir</td>
 								<td><?= $detail_pd['tempat_lahir'] ?>/<?= date('d-m-Y', strtotime($detail_pd['tanggal_lahir'])) ?></td>
 							</tr>
 							<tr>
-								<td>No Registrasi Akta Lahir</td>
-								<td><?= $detail_pd['No_Registrasi_Akta_Lahir'] ?></td>
+								<td>Tingkat Pendidikan</td>
+								<td><?= $detail_pd['tingkat_pendidikan_id'] ?></td>
 							</tr>
 							<tr>
-								<td>Kebutuhan Khusus</td>
-								<td><?= $detail_pd['Kebutuhan_Khusus'] ?></td>
+								<td>Kurikulum</td>
+								<td><?= $detail_pd['kurikulum_id'].'/'.$detail_pd['kurikulum_id_str'] ?></td>
 							</tr>
 							<tr>
-								<td>Agama</td>
-								<td><?= $detail_pd['agama_id_str'] ?></td>
+								<td>Rombel</td>
+								<td><?= $detail_pd['nama_rombel'] ?></td>
 							</tr>
 							<tr>
-								<td>Tinggi Badan</td>
-								<td><?= $detail_pd['tinggi_badan'] ?></td>
+								<td>Telepon</td>
+								<td><?= $detail_pd['telepon'] ?></td>
 							</tr>
 							<tr>
-								<td>Berat Badan</td>
-								<td><?= $detail_pd['berat_badan'] ?></td>
+								<td>HP</td>
+								<td><?= $detail_pd['hp'] ?></td>
+							</tr>
+							<tr>
+								<td>Email</td>
+								<td><?= $detail_pd['email'] ?></td>
 							</tr>
 						</table>
 					</div>
