@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+require FCPATH.'/vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class Data_ref_dapodik extends CI_Controller {
 
 	function __construct()
@@ -116,8 +118,98 @@ class Data_ref_dapodik extends CI_Controller {
 		$this->load->view('template', $data, FALSE);
 	}
 
-	function data_pd()
+	function data_pd($aksi=null, $id=null)
 	{
+		if($aksi){
+			if($aksi=='import_peserta_didik'){
+				$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+				if($_FILES){
+					$spreadsheet = $reader->load($_FILES['file_upload']['tmp_name']);
+					$sheetData = $spreadsheet->getActiveSheet()->toArray();
+					if ($sheetData[0][0]=='Daftar Peserta Didik'){
+						$sekolah = $this->m_data_utama->getsekolah()[0]->nama;
+						if($sheetData[1][0]==$sekolah){
+							$jml = count($sheetData);
+
+							$berhasil = [];
+							$gagal = [];
+							for ($i=6; $i < $jml; $i++) { 
+								$nama = $sheetData[$i][1];
+								$nisn = $sheetData[$i][4];
+
+								$pd = [
+									'nama' => $sheetData[$i][1],
+									'nipd' => $sheetData[$i][2],
+									'nisn' => $sheetData[$i][4],
+									'alamat' => $sheetData[$i][9],
+									'rt' => $sheetData[$i][10],
+									'rw' => $sheetData[$i][11],
+									'dusun' => $sheetData[$i][12],
+									'kelurahan' => $sheetData[$i][13],
+									'kecamatan' => $sheetData[$i][14],
+									'kode_pos' => $sheetData[$i][15],
+									'jenis_tinggal' => $sheetData[$i][16],
+									'alat_transportasi' => $sheetData[$i][17],
+									'telepon' => $sheetData[$i][18],
+									'hp' => $sheetData[$i][19],
+									'email' => $sheetData[$i][20],
+									'SKHUN' => $sheetData[$i][21],
+									'penerima_kps' => $sheetData[$i][22],
+									'no_kps' => $sheetData[$i][23],
+									'tahun_lahir_ayah' => $sheetData[$i][25],
+									'jenjang_pendidikan_ayah' => $sheetData[$i][26],
+							// 'pekerjaan_ayah' => $sheetData[$i][27],
+									'penghasilan_ayah' => $sheetData[$i][28],
+									'nik_ayah' => $sheetData[$i][29],
+									'tahun_lahir_ibu' => $sheetData[$i][31],
+									'jenjang_pendidikan_ibu' => $sheetData[$i][32],
+							// 'pekerjaan_ibu' => $sheetData[$i][33],
+									'penghasilan_ibu' => $sheetData[$i][34],
+									'nik_ibu' => $sheetData[$i][35],
+									'tahun_lahir_wali' => $sheetData[$i][37],
+									'jenjang_pendidikan_wali' => $sheetData[$i][38],
+							// 'pekerjaan_wali' => $sheetData[$i][39],
+									'penghasilan_wali' => $sheetData[$i][40],
+									'nik_wali' => $sheetData[$i][41],
+									'no_peserta_ujian_nasional' => $sheetData[$i][43],
+									'no_seri_ijazah' => $sheetData[$i][44],
+									'penerima_kip' => $sheetData[$i][45],
+									'nomor_kip' => $sheetData[$i][46],
+									'nama_di_kip' => $sheetData[$i][47],
+									'nomor_kks' => $sheetData[$i][48],
+									'no_registrasi_akta_lahir' => $sheetData[$i][49],
+									'bank' => $sheetData[$i][50],
+									'nomor_rekening_bank' => $sheetData[$i][51],
+									'rekening_atas_nama' => $sheetData[$i][52],
+									'layak_pip_usulan_dari_sekolah' => $sheetData[$i][53],
+									'alasan_layak_pip' => $sheetData[$i][54],
+									'kebutuhan_khusus' => $sheetData[$i][55],
+									'sekolah_asal' => $sheetData[$i][56],
+									'lintang' => $sheetData[$i][58],
+									'bujur' => $sheetData[$i][59],
+									'no_kk' => $sheetData[$i][60],
+									'lingkar_kepala' => $sheetData[$i][63],
+									'jml_saudara' => $sheetData[$i][64],
+									'no_peserta_ujian_nasional' => $sheetData[$i][43],
+								];
+								$this->db->where(['nisn'=>$nisn, 'nama'=>$nama, 'semester_id'=>$this->session->userdata('semester_id')]);
+								$this->db->update('getpesertadidik', $pd);
+								if($this->db->affected_rows()>>0){
+									$berhasil[] = 1;
+								}else{
+									$gagal[] = 1;
+								}
+							}
+							?> <div class="alert alert-info p-3"> <?= array_sum($berhasil) ?> data berhasil diperbaharui<br> <?= array_sum($gagal) ?> data gagal diperbaharui. </div> <?php
+						}else{
+							?> <div class="alert alert-danger"> Bukan <?= $sekolah ?> </div> <?php
+						}
+					}else{
+						?> <div class="alert alert-danger"> Bukan File Peserta Didik Dapodik </div> <?php
+					}
+				}
+			}
+		}
 		$data = [
 			'rombel' => $this->m_data_utama->getrombonganbelajar_kelas(),
 			'pd' => $this->m_data_utama->getpesertadidik(),

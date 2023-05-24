@@ -33,7 +33,7 @@ class Auth extends CI_Controller {
 					echo '<script>window.location.href = "";</script>';
 				}
 			}else{
-				echo "Username: ".$this->input->post('username')." tidak ditemukan";
+				?> <div class="alert-danger alert">User dengan email: "<b><?= $this->input->post('inputEmail') ?></b>" tidak ditemukan</div> <?php
 			}
 		}
 	}

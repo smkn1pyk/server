@@ -20,6 +20,7 @@
 				</select>
 				<label>Rombel</label>
 			</div>
+			<button class="btn btn-primary ml-2" data-bs-target="#exampleModal" data-bs-toggle="modal" hx-post="<?= base_url('form/get/data_ref_dapodik/import_peserta_didik') ?>" hx-target=".modal-body"><i class="fas fa-file-excel"></i></button>
 		</div>
 	</div>
 	<div class="card-body">
