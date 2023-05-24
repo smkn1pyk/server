@@ -229,6 +229,7 @@ class Data_ref_dapodik extends CI_Controller {
 	function data_detail_pd($id=null)
 	{
 		$data = [
+			'id' => $id,
 			'detail_pd' => $this->m_data_utama->getpesertadidik_id($id),
 		];
 		$this->load->view('pages/data_ref_dapodik/detail_pd', $data, FALSE);
