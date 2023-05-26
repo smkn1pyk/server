@@ -247,6 +247,29 @@ class Kelulusan extends CI_Controller {
 		}
 	}
 
+	function print($id=null)
+	{
+		if($id){
+			$lulusan_pengaturan = $this->db->get_where('lulusan_pengaturan', ['semester_id'=>$this->session->userdata('semester_id')])->row_array();
+			$status = $this->db->get_where('lulusan_data', ['peserta_didik_id'=>$id, 'semester_id'=>$this->session->userdata('semester_id')])->row_array();
+			$siswa = $this->db->get_where('getpesertadidik', ['peserta_didik_id'=>$id, 'semester_id'=>$this->session->userdata('semester_id')])->row_array();
+			if($siswa&&$status&&$lulusan_pengaturan){
+				$data = [
+					'title' => $siswa['nama'],
+					'siswa' => $siswa,
+					'sekolah' => $this->db->get_where('getsekolah', ['semester_id'=>$this->session->userdata('semester_id')])->row_array(),
+					'kop_sekolah' => $this->db->get_where('kop_sekolah', ['semester_id'=>$this->session->userdata('semester_id')])->row_array(),
+					'rombel' => $this->db->get_where('getrombonganbelajar', ['rombongan_belajar_id'=>$this->session->userdata('rombongan_belajar_id')])->row_array(),
+					'lulusan' => $lulusan_pengaturan,
+					'status' => $status,
+				];
+				$this->load->view('pages/kelulusan/skl', $data, FALSE);
+			}else{
+				?> <div class="alert-danger"> Terjadi kesalahan sistem, data siswa tidak ditemukan! </div> <?php
+			}
+		}
+	}
+
 }
 
 /* End of file Kelulusan.php */

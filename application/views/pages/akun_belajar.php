@@ -31,6 +31,8 @@
 	<div class="card-body">
 		<?php
 		if($akun_belajar){
+			header('Content-Type: application/vnd.ms.excel');
+			header('Content-Disposition: attachment;filename="'.$id.'.xlsx"');
 			?>
 			Jumlah <?= count($akun_belajar) ?> data
 			<div class="table-responsive">

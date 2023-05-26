@@ -50,7 +50,7 @@
 				<?php
 				if($this->session->userdata('ptk_id')){
 					?>
-					<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#exam" aria-expanded="false" aria-controls="collapseLayouts">
+					<!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#exam" aria-expanded="false" aria-controls="collapseLayouts">
 						<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
 						Exam
 						<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -61,7 +61,7 @@
 							<a class="nav-link" href="<?= base_url('exam/paket_soal') ?>">Paket Soal</a>
 							<a class="nav-link" href="<?= base_url('exam/jadwal_tes') ?>">Jadwal Tes</a>
 						</nav>
-					</div>
+					</div> -->
 
 					<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#kelulusan" aria-expanded="false" aria-controls="collapseLayouts">
 						<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>

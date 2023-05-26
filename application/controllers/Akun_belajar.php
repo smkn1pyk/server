@@ -64,6 +64,7 @@ class Akun_belajar extends CI_Controller {
 			}
 		}
 		$data = [
+			'id' => 'export',
 			'rombel' => $this->m_data_utama->getrombonganbelajar_kelas(),
 			'akun_belajar' => $this->m_akun_belajar->akun_belajar(),
 		];

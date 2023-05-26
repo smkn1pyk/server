@@ -65,6 +65,7 @@
 										?>
 									</td>
 									<td>
+										<a class="btn btn-sm btn-dark" target="_blank" href="<?= base_url('kelulusan/print/'.$value->peserta_didik_id) ?>" hx-confirm="Yakin ?"><i class="fas fa-print"></i></a>
 										<button class="btn btn-sm btn-success" data-bs-target="#exampleModal" data-bs-toggle="modal" hx-post="<?= base_url('form/get/kelulusan/edit_lulusan_data/'.$value->uniq) ?>" hx-target=".modal-body"><i class="fas fa-edit"></i></button>
 										<button class="btn btn-sm btn-danger" hx-post="<?= base_url('kelulusan/lulusan_data/hapus/'.$value->uniq) ?>" hx-target="#data" hx-confirm="Yakin ?"><i class="fas fa-trash"></i></button>
 									</td>
