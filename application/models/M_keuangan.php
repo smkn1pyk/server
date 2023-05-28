@@ -45,7 +45,7 @@ class M_keuangan extends CI_Model {
 		return $this->db->get_where('keuangan_mapping', ['uniq'=>$uniq, 'semester_id'=>$this->session->userdata('semester_id')])->result();
 	}
 
-	function mapping_rombel($rombongan_belajar_id)
+	function keuangan_rombel($rombongan_belajar_id)
 	{
 		$semester_id = $this->session->userdata('semester_id');
 		return $this->db->query("SELECT keuangan_mapping.*, keuangan_data_iuran.uniq_jenis, keuangan_data_iuran.nama as nama_iuran, keuangan_jenis_iuran.nama as nama_jenis_iuran, keuangan_jenis_iuran.kode from keuangan_mapping, keuangan_data_iuran, keuangan_jenis_iuran where

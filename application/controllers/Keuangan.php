@@ -32,12 +32,6 @@ class Keuangan extends CI_Controller {
 
 	function data_data_iuran($aksi=null, $id=null)
 	{
-		// $object = [
-		// 	'uniq' => uniqid(),
-		// 	'nama' => "Iuran PerItem",
-		// 	'kode' => 1,
-		// ];
-		// $this->db->insert('keuangan_jenis_iuran', $object);
 		if($aksi){
 			if($aksi=='tambah'){
 				$this->form_validation->set_rules('jenis_iuran', 'Jenis Iuran', 'trim|required');

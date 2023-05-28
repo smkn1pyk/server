@@ -61,11 +61,9 @@
 				</div>
 			</div> -->
 			<?php
-			if($data_iuran){
-				echo "<pre>";
-				print_r ($data_iuran);
-				echo "</pre>";
-			}
+			echo "<pre>";
+			print_r ($keuangan_rombel);
+			echo "</pre>";
 		}else{
 			?> <div class="alert-danger p-3"> Terjadi kesalahan sistem, data tidak ditemukan </div> <?php
 		}

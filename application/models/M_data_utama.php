@@ -223,6 +223,13 @@ class M_data_utama extends CI_Model {
 		return $this->db->get_where('getpesertadidik', ['peserta_didik_id'=>$id, 'semester_id'=>$semester_id])->row_array();
 	}
 
+	function jejak_rombel_id($id)
+	{
+		$this->db->select('rombongan_belajar_id');
+		return $cekPesertaDidik = $this->db->get_where('getpesertadidik', ['peserta_didik_id'=>$id])->result();
+
+	}
+
 	function pd_rombel_l($rombongan_belajar_id)
 	{
 		$semester_id = $this->session->userdata('semester_id');

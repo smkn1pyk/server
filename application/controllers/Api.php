@@ -345,9 +345,9 @@ class Api extends RestController {
 	function ambil_data_get($method=null)
 	{
 		$header = getallheaders();
-		echo "<pre>";
-		print_r ($header);
-		echo "</pre>";
+		// echo "<pre>";
+		// print_r ($header);
+		// echo "</pre>";
 		if($method){
 			if($method=='getgtk'){
 				$where = ['tahun_ajaran_id'=>substr($header['semester_id'], 0, 4)];

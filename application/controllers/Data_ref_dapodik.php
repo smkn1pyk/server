@@ -306,11 +306,21 @@ class Data_ref_dapodik extends CI_Controller {
 	function data_detail_pd($id=null)
 	{
 		$detail_pd = $this->m_data_utama->getpesertadidik_id($id);
+		$jejak_rombel = $this->m_data_utama->jejak_rombel_id($id);
 		$this->load->model('m_keuangan');
+		if($jejak_rombel){
+			foreach ($jejak_rombel as $key => $value) {
+				$keuangan_rombel[] = $this->m_keuangan->keuangan_rombel($value->rombongan_belajar_id);	
+			}
+		}else{
+			$keuangan_rombel = [];
+		}
+		
 		$data = [
 			'id' => $id,
 			'detail_pd' => $detail_pd,
-			'data_iuran' => $this->m_keuangan->mapping_rombel($detail_pd['rombongan_belajar_id']),
+			'jejak_rombel' => $jejak_rombel,
+			'keuangan_rombel' => $keuangan_rombel,
 		];
 		$this->load->view('pages/data_ref_dapodik/detail_pd', $data, FALSE);
 	}
