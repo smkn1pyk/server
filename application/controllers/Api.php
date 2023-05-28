@@ -88,17 +88,12 @@ class Api extends RestController {
 		$slice = array_slice($_POST, 1);
 		$decrypt = json_decode(base64_decode($slice['rwy_pend_formal']), true);
 		if(is_array($decrypt)){
-			$cekData = $this->db->get_where('rwy_pend_formal', ['riwayat_pendidikan_formal_id'=>$decrypt['riwayat_pendidikan_formal_id']])->result_array();
+			$cekData = $this->db->get_where('rwy_pend_formal', ['riwayat_pendidikan_formal_id'=>$decrypt['riwayat_pendidikan_formal_id']])->row_array();
 			if($cekData){
-				foreach ($cekData as $key => $value) {
-					$this->db->where($value);
-					$this->db->delete('rwy_pend_formal');
-				}
-				$this->db->insert('rwy_pend_formal', $decrypt);
-				if($this->db->affected_rows()>>0){
-					$berhasil_tambah[] = 1;
-				}else{
-					$berhasil_tambah[] = 0;
+				$beda = array_diff($decrypt, $cekData);
+				if($beda){
+					$this->db->where(['riwayat_pendidikan_formal_id'=>$decrypt['riwayat_pendidikan_formal_id']]);
+					$this->db->update('rwy_pend_formal', $decrypt);
 				}
 			}else{
 				$this->db->insert('rwy_pend_formal', $decrypt);
@@ -130,17 +125,12 @@ class Api extends RestController {
 		$slice = array_slice($_POST, 1);
 		$decrypt = json_decode(base64_decode($slice['rwy_kepangkatan']), true);
 		if(is_array($decrypt)){
-			$cekData = $this->db->get_where('rwy_kepangkatan', ['riwayat_kepangkatan_id'=>$decrypt['riwayat_kepangkatan_id']])->result_array();
+			$cekData = $this->db->get_where('rwy_kepangkatan', ['riwayat_kepangkatan_id'=>$decrypt['riwayat_kepangkatan_id']])->row_array();
 			if($cekData){
-				foreach ($cekData as $key => $value) {
-					$this->db->where($value);
-					$this->db->delete('rwy_kepangkatan');
-				}
-				$this->db->insert('rwy_kepangkatan', $decrypt);
-				if($this->db->affected_rows()>>0){
-					$berhasil_tambah[] = 1;
-				}else{
-					$berhasil_tambah[] = 0;
+				$beda = array_diff($decrypt, $cekData);
+				if($beda){
+					$this->db->where(['riwayat_kepangkatan_id'=>$decrypt['riwayat_kepangkatan_id']]);
+					$this->db->update('rwy_kepangkatan', $decrypt);
 				}
 			}else{
 				$this->db->insert('rwy_kepangkatan', $decrypt);
@@ -172,17 +162,12 @@ class Api extends RestController {
 		$slice = array_slice($_POST, 1);
 		$decrypt = json_decode(base64_decode($slice['getpesertadidik']), true);
 		if(is_array($decrypt)){
-			$cekData = $this->db->get_where('getpesertadidik', ['peserta_didik_id'=>$decrypt['peserta_didik_id'], 'semester_id'=>$decrypt['semester_id']])->result_array();
+			$cekData = $this->db->get_where('getpesertadidik', ['peserta_didik_id'=>$decrypt['peserta_didik_id'], 'semester_id'=>$decrypt['semester_id']])->row_array();
 			if($cekData){
-				foreach ($cekData as $key => $value) {
-					$this->db->where($value);
-					$this->db->delete('getpesertadidik');
-				}
-				$this->db->insert('getpesertadidik', $decrypt);
-				if($this->db->affected_rows()>>0){
-					$berhasil_tambah[] = 1;
-				}else{
-					$berhasil_tambah[] = 0;
+				$beda = array_diff($decrypt, $cekData);
+				if($beda){
+					$this->db->where(['peserta_didik_id'=>$decrypt['peserta_didik_id'], 'semester_id'=>$decrypt['semester_id']]);
+					$this->db->update('getpesertadidik', $decrypt);
 				}
 			}else{
 				$this->db->insert('getpesertadidik', $decrypt);
@@ -214,17 +199,12 @@ class Api extends RestController {
 		$slice = array_slice($_POST, 1);
 		$decrypt = json_decode(base64_decode($slice['getrombonganbelajar']), true);
 		if(is_array($decrypt)){
-			$cekData = $this->db->get_where('getrombonganbelajar', ['rombongan_belajar_id'=>$decrypt['rombongan_belajar_id'],'jenis_rombel'=>$decrypt['jenis_rombel'], 'semester_id'=>$decrypt['semester_id']])->result_array();
+			$cekData = $this->db->get_where('getrombonganbelajar', ['rombongan_belajar_id'=>$decrypt['rombongan_belajar_id'],'jenis_rombel'=>$decrypt['jenis_rombel'], 'semester_id'=>$decrypt['semester_id']])->row_array();
 			if($cekData){
-				foreach ($cekData as $key => $value) {
-					$this->db->where($value);
-					$this->db->delete('getrombonganbelajar');
-				}
-				$this->db->insert('getrombonganbelajar', $decrypt);
-				if($this->db->affected_rows()>>0){
-					$berhasil_tambah[] = 1;
-				}else{
-					$berhasil_tambah[] = 0;
+				$beda = array_diff($decrypt, $cekData);
+				if($beda){
+					$this->db->where(['rombongan_belajar_id'=>$decrypt['rombongan_belajar_id'],'jenis_rombel'=>$decrypt['jenis_rombel'], 'semester_id'=>$decrypt['semester_id']]);
+					$this->db->update('getrombonganbelajar', $decrypt);
 				}
 			}else{
 				$this->db->insert('getrombonganbelajar', $decrypt);
