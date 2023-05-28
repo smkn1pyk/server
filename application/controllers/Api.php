@@ -237,17 +237,12 @@ class Api extends RestController {
 		$decrypt = json_decode(base64_decode($slice['anggota_rombel']), true);
 		if(is_array($decrypt)){
 			// $cekData = $this->db->get_where('anggota_rombel', ['anggota_rombel_id'=>$decrypt['anggota_rombel_id'],'peserta_didik_id'=>$decrypt['peserta_didik_id'], 'rombongan_belajar_id'=>$decrypt['rombongan_belajar_id'], 'semester_id'=>$decrypt['semester_id']])->result_array();
-			$cekData = $this->db->get_where('anggota_rombel', ['anggota_rombel_id'=>$decrypt['anggota_rombel_id']])->result_array();
+			$cekData = $this->db->get_where('anggota_rombel', ['anggota_rombel_id'=>$decrypt['anggota_rombel_id']])->row_array();
 			if($cekData){
-				foreach ($cekData as $key => $value) {
-					$this->db->where($value);
-					$this->db->delete('anggota_rombel');
-				}
-				$this->db->insert('anggota_rombel', $decrypt);
-				if($this->db->affected_rows()>>0){
-					$berhasil_tambah[] = 1;
-				}else{
-					$berhasil_tambah[] = 0;
+				$beda = array_diff($decrypt, $cekData);
+				if($beda){
+					$this->db->where(['anggota_rombel_id'=>$decrypt['anggota_rombel_id']]);
+					$this->db->update('anggota_rombel', $decrypt);
 				}
 			}else{
 				$this->db->insert('anggota_rombel', $decrypt);
@@ -278,17 +273,12 @@ class Api extends RestController {
 		$slice = array_slice($_POST, 1);
 		$decrypt = json_decode(base64_decode($slice['pembelajaran']), true);
 		if(is_array($decrypt)){
-			$cekData = $this->db->get_where('pembelajaran', ['pembelajaran_id'=>$decrypt['pembelajaran_id'],'ptk_terdaftar_id'=>$decrypt['ptk_terdaftar_id']])->result_array();
+			$cekData = $this->db->get_where('pembelajaran', ['pembelajaran_id'=>$decrypt['pembelajaran_id'],'ptk_terdaftar_id'=>$decrypt['ptk_terdaftar_id']])->row_array();
 			if($cekData){
-				foreach ($cekData as $key => $value) {
-					$this->db->where($value);
-					$this->db->delete('pembelajaran');
-				}
-				$this->db->insert('pembelajaran', $decrypt);
-				if($this->db->affected_rows()>>0){
-					$berhasil_tambah[] = 1;
-				}else{
-					$berhasil_tambah[] = 0;
+				$beda = array_diff($decrypt, $cekData);
+				if($beda){
+					$this->db->where(['pembelajaran_id'=>$decrypt['pembelajaran_id'],'ptk_terdaftar_id'=>$decrypt['ptk_terdaftar_id']]);
+					$this->db->update('pembelajaran', $decrypt);
 				}
 			}else{
 				$this->db->insert('pembelajaran', $decrypt);
@@ -322,15 +312,10 @@ class Api extends RestController {
 		if(is_array($decrypt)){
 			$cekData = $this->db->get_where('getpengguna', ['pengguna_id'=>$decrypt['pengguna_id'],'status'=>$decrypt['status']])->result_array();
 			if($cekData){
-				foreach ($cekData as $key => $value) {
-					$this->db->where($value);
-					$this->db->delete('getpengguna');
-				}
-				$this->db->insert('getpengguna', $decrypt);
-				if($this->db->affected_rows()>>0){
-					$berhasil_tambah[] = 1;
-				}else{
-					$berhasil_tambah[] = 0;
+				$beda = array_diff($decrypt, $cekData);
+				if($beda){
+					$this->db->where(['pengguna_id'=>$decrypt['pengguna_id'],'status'=>$decrypt['status']]);
+					$this->db->update('getpengguna', $decrypt);
 				}
 			}else{
 				$this->db->insert('getpengguna', $decrypt);
