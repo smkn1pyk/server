@@ -407,7 +407,8 @@ class M_data_utama extends CI_Model {
 						$this->db->or_like('status_di_kurikulum_str', $pencarian, 'BOTH');
 						$this->db->where(['semester_id'=>$semester_id]);
 						$this->db->order_by('rombongan_belajar_id', 'asc');
-						return $this->db->get_where('pembelajaran', ['semester_id'=>$this->session->userdata('semester_id')])->result();
+						$this->db->where(['semester_id'=>$this->session->userdata('semester_id')]);
+						return $this->db->get('pembelajaran')->result();
 					}else
 					if($this->input->get('jenis_rombel')){
 						$rombel = $this->getrombonganbelajar();

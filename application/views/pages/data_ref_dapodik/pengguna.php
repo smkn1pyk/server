@@ -43,9 +43,14 @@
 								}
 								?>
 							</td>
-							<td><?= $value->status ?></td>
+							<td>
+								<?php
+								if($value->status==0){$status="Tidak Aktif";}else if($value->status==1){$status="Aktif";}
+								echo $status;
+								?>
+							</td>
 							<td class="text-center">
-								<button class="btn btn-success btn-sm"><i class="fas fa-edit"></i></button>
+								<button class="btn btn-success btn-sm" data-bs-target="#exampleModal" data-bs-toggle="modal" hx-post="<?= base_url('form/get/data_ref_dapodik/edit_pengguna/'.$value->pengguna_id) ?>" hx-target=".modal-body"><i class="fas fa-edit"></i></button>
 								<button class="btn btn-danger btn-sm" hx-post="<?= base_url('data_ref_dapodik/data_pengguna/hapus/'.$value->pengguna_id) ?>" hx-target="#data" hx-confirm="Yakin ?"><i class="fas fa-trash"></i></button>
 							</td>
 						</tr>

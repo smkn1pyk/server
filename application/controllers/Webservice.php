@@ -65,18 +65,21 @@ class Webservice extends CI_Controller {
 								}else
 								if($key=='getpengguna'){
 									$where = ['pengguna_id'=>$value2['pengguna_id']];
-								}
-								// echo "<pre>";
-								// print_r ($value2);
-								// echo "</pre>";
-								
-								$cekData = $this->db->get_where($key, $where)->result_array();
+								}								
+								$cekData = $this->db->get_where($key, $where)->row_array();
 								if($cekData){
-									foreach ($cekData as $key3 => $value3) {
+									$beda = array_diff($value2, $cekData);
+									if($beda){
 										$this->db->where($where);
-										$this->db->delete($key);
+										$this->db->update($key, $beda);
+										if($this->db->affected_rows()>>0){
+											$berhasil_update[] = 1;
+										}else{
+											$gagal_update[] = 1;
+										}
+									}else{
+										?> <div class="alert alert-info"> Semua data telah terbaru </div> <?php
 									}
-									$this->db->insert($key, $value2);
 								}else{
 									$this->db->insert($key, $value2);
 								}
@@ -89,7 +92,7 @@ class Webservice extends CI_Controller {
 						Berhasil ditambahkan <?= array_sum($berhasil_tambah) ?> data <br>
 						Gagal ditambahkan <?= array_sum($gagal_tambah) ?> data <br>
 						Berhasil diperbaharui <?= array_sum($berhasil_update) ?> data <br>
-						Gagal diperbaharui <?= array_sum($berhasil_update) ?> data.
+						Gagal diperbaharui <?= array_sum($gagal_update) ?> data.
 					</div>
 					<?php
 				}

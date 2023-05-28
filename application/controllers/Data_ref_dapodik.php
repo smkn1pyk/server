@@ -305,9 +305,12 @@ class Data_ref_dapodik extends CI_Controller {
 
 	function data_detail_pd($id=null)
 	{
+		$detail_pd = $this->m_data_utama->getpesertadidik_id($id);
+		$this->load->model('m_keuangan');
 		$data = [
 			'id' => $id,
-			'detail_pd' => $this->m_data_utama->getpesertadidik_id($id),
+			'detail_pd' => $detail_pd,
+			'data_iuran' => $this->m_keuangan->mapping_rombel($detail_pd['rombongan_belajar_id']),
 		];
 		$this->load->view('pages/data_ref_dapodik/detail_pd', $data, FALSE);
 	}
@@ -389,6 +392,26 @@ class Data_ref_dapodik extends CI_Controller {
 	function data_pengguna($aksi=null, $id=null)
 	{
 		if($aksi){
+			if($aksi=='edit'){
+				$cekPengguna = $this->m_data_utama->getpengguna_id($id);
+				if($cekPengguna){
+					if($this->input->post('password')){
+						$this->db->where($cekPengguna);
+						$this->db->update('getpengguna', ['password'=>password_hash($this->input->post('password'), PASSWORD_DEFAULT)]);
+						echo $this->alert->pesan('edit');
+					}
+					$status = strval($this->input->post('status'));
+					if($status==0||$status==1){
+						if($this->input->post('status')!=$cekPengguna['status']){
+							$this->db->where($cekPengguna);
+							$this->db->update('getpengguna', ['status'=>$this->input->post('status')]);
+							echo $this->alert->pesan('edit');
+						}
+					}
+				}else{
+					?> <div class="alert alert-danger"> Terjadi kesalahan sitem, data pengguna tidak ditemukan </div> <?php
+				}
+			}else
 			if($aksi=='hapus'){
 				if($id){
 					$cekPengguna = $this->m_data_utama->getpengguna_id($id);

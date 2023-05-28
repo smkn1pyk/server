@@ -13,6 +13,7 @@ if($id){
 						<?php foreach ($results as $key => $value): ?>
 							<?php
 							$encrypt = base64_encode(json_encode($value));
+							// $encrypt = $this->kripto->enkripsi(json_encode($value), 'admin123');
 							?>
 							<div class="form-check">
 								<input type="checkbox" class="form-check-input" name="kirim_data[]" value="<?= $encrypt ?>" id="<?= $value->sekolah_id ?>">

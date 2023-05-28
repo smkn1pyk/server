@@ -16,17 +16,12 @@ class Api extends RestController {
 		$slice = array_slice($_POST, 1);
 		$decrypt = json_decode(base64_decode($slice['getsekolah']), true);
 		if(is_array($decrypt)){
-			$cekData = $this->db->get_where('getsekolah', ['sekolah_id'=>$decrypt['sekolah_id'], 'semester_id'=>$decrypt['semester_id']])->result_array();
+			$cekData = $this->db->get_where('getsekolah', ['sekolah_id'=>$decrypt['sekolah_id'], 'semester_id'=>$decrypt['semester_id']])->row_array();
 			if($cekData){
-				foreach ($cekData as $key1 => $value1) {
-					$this->db->where($value1);
-					$this->db->delete('getsekolah');
-				}
-				$this->db->insert('getsekolah', $decrypt);
-				if($this->db->affected_rows()>>0){
-					$berhasil_tambah[] = 1;
-				}else{
-					$berhasil_tambah[] = 0;
+				$beda = array_diff($decrypt, $cekData);
+				if($beda){
+					$this->db->where(['sekolah_id'=>$decrypt['sekolah_id'], 'semester_id'=>$decrypt['sekolah_id']]);
+					$this->db->update('getsekolah', $decrypt);
 				}
 			}else{
 				$this->db->insert('getsekolah', $decrypt);
@@ -56,17 +51,12 @@ class Api extends RestController {
 		$slice = array_slice($_POST, 1);
 		$decrypt = json_decode(base64_decode($slice['getgtk']), true);
 		if(is_array($decrypt)){
-			$cekData = $this->db->get_where('getgtk', ['ptk_id'=>$decrypt['ptk_id'], 'tahun_ajaran_id'=>$decrypt['tahun_ajaran_id']])->result_array();
+			$cekData = $this->db->get_where('getgtk', ['ptk_id'=>$decrypt['ptk_id'], 'tahun_ajaran_id'=>$decrypt['tahun_ajaran_id']])->row_array();
 			if($cekData){
-				foreach ($cekData as $key => $value) {
-					$this->db->where($value);
-					$this->db->delete('getgtk');
-				}
-				$this->db->insert('getgtk', $decrypt);
-				if($this->db->affected_rows()>>0){
-					$berhasil_tambah[] = 1;
-				}else{
-					$berhasil_tambah[] = 0;
+				$beda = array_diff($decrypt, $cekData);
+				if($beda){
+					$this->db->where(['ptk_id'=>$decrypt['ptk_id'], 'tahun_ajaran_id'=>$decrypt['tahun_ajaran_id']]);
+					$this->db->update('getgtk', $decrypt);
 				}
 			}else{
 				$this->db->insert('getgtk', $decrypt);

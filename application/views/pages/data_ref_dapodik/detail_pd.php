@@ -11,7 +11,7 @@
 		<?php
 		if($detail_pd){
 			?>
-			<div class="card">
+			<!-- <div class="card">
 				<div class="card-header"><h3>Biodata Siswa</h3></div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -59,8 +59,13 @@
 						</table>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<?php
+			if($data_iuran){
+				echo "<pre>";
+				print_r ($data_iuran);
+				echo "</pre>";
+			}
 		}else{
 			?> <div class="alert-danger p-3"> Terjadi kesalahan sistem, data tidak ditemukan </div> <?php
 		}
