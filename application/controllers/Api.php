@@ -217,7 +217,7 @@ class Api extends RestController {
 			$response = [
 				'status' => true,
 				'message' => "Success",
-				'data' => array_sum($berhasil_tambah),
+				'data' => $this->db->last_query(),
 			];
 
 			$this->response($response, 200);
