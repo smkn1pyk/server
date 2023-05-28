@@ -273,11 +273,11 @@ class Api extends RestController {
 		$slice = array_slice($_POST, 1);
 		$decrypt = json_decode(base64_decode($slice['pembelajaran']), true);
 		if(is_array($decrypt)){
-			$cekData = $this->db->get_where('pembelajaran', ['pembelajaran_id'=>$decrypt['pembelajaran_id'],'ptk_terdaftar_id'=>$decrypt['ptk_terdaftar_id']])->row_array();
+			$cekData = $this->db->get_where('pembelajaran', ['pembelajaran_id'=>$decrypt['pembelajaran_id'],'ptk_terdaftar_id'=>$decrypt['ptk_terdaftar_id'], 'semester_id'=>$decrypt['semester_id']])->row_array();
 			if($cekData){
 				$beda = array_diff($decrypt, $cekData);
 				if($beda){
-					$this->db->where(['pembelajaran_id'=>$decrypt['pembelajaran_id'],'ptk_terdaftar_id'=>$decrypt['ptk_terdaftar_id']]);
+					$this->db->where(['pembelajaran_id'=>$decrypt['pembelajaran_id'],'ptk_terdaftar_id'=>$decrypt['ptk_terdaftar_id'], 'semester_id'=>$decrypt['semester_id']]);
 					$this->db->update('pembelajaran', $decrypt);
 				}
 			}else{
