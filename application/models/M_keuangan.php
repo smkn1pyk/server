@@ -50,7 +50,7 @@ class M_keuangan extends CI_Model {
 		$semester_id = $this->session->userdata('semester_id');
 		return $this->db->query("SELECT keuangan_mapping.*, keuangan_data_iuran.uniq_jenis, keuangan_data_iuran.nama as nama_iuran, keuangan_jenis_iuran.nama as nama_jenis_iuran, keuangan_jenis_iuran.kode from keuangan_mapping, keuangan_data_iuran, keuangan_jenis_iuran where
 			keuangan_mapping.rombongan_belajar_id='$rombongan_belajar_id' and
-			keuangan_mapping.semester_id='$semester_id' and
+			-- keuangan_mapping.semester_id='$semester_id' and
 			keuangan_mapping.uniq_iuran=keuangan_data_iuran.uniq and
 			keuangan_mapping.semester_id=keuangan_data_iuran.semester_id and
 			keuangan_data_iuran.uniq_jenis=keuangan_jenis_iuran.uniq
